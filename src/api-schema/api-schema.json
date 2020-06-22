@@ -1,0 +1,16 @@
+{
+  "$schema": "../../node_modules/declarapi/src/schema/crudContractSchema.json",
+  "name": "CatSpotter",
+  "authentication": false,
+  "dataType": {
+    "id": "string",
+    "spotter": "string"
+  },
+  "methods": {
+    "get": true,
+    "post": true,
+    "put": false,
+    "patch": false,
+    "delete": false
+  }
+}
