@@ -18,6 +18,11 @@ describe('index.ts', () => {
 
   it('gets the root endpoint', async () => {
     const res = await fetch(`${testHost}/`)
+    expect(res.status).toEqual(200)
+  })
+
+  it('gets a non-existing endpoint', async () => {
+    const res = await fetch(`${testHost}/non-existing`)
     expect(res.status).toEqual(404)
   })
 
