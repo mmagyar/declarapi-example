@@ -1,0 +1,73 @@
+{
+  "$schema": "../../node_modules/declarapi/src/schema/crudContractSchema.json",
+  "name": "cat",
+  "authentication": false,
+  "dataType": {
+    "id": "string",
+    "spotter": "string",
+    "datetime": {
+      "$string": {
+        "regex": "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z"
+      }
+    },
+    "location": [
+      "?",
+      {
+        "latitude": "number",
+        "longitude": "number"
+      }
+    ],
+    "color": {
+      "$array": {
+        "$enum": ["black", "white", "grey", "blue", "brown", "cinnamon", "cream"]
+      }
+    },
+    "breed": ["?", "string"],
+    "age": [
+      "?",
+      {
+        "$enum": [
+          "kitten",
+          "young",
+          "old"
+        ]
+      }
+    ],
+    "activity": [
+      "?",
+      {
+        "$enum": [
+          "sleeping",
+          "maintaining anal hygiene",
+          "maintaining fur hygiene",
+          "watching",
+          "playing",
+          "acting scared",
+          "acting weird",
+          "looking grumpy",
+          "eating",
+          "drinking",
+          "hunting"
+        ]
+      }
+    ],
+    "quantumState": [
+      "?",
+      {
+        "$enum": [
+          "alive",
+          "dead",
+          "both",
+          "neither"
+        ]
+      }
+    ]
+  },
+  "methods": {
+    "get": true,
+    "post": true,
+    "put": false,
+    "patch": false,
+    "delete": false
+  }
+}
