@@ -8,7 +8,8 @@
     "build": "tsc",
     "watch": "tsc-watch --onSuccess 'node ./dist/index.js'",
     "start": "ts-node-dev src/index.ts",
-    "test": "jest"
+    "test": "jest",
+    "generate": "declarapi"
   },
   "eslintConfig": {
     "rules": {
@@ -45,7 +46,7 @@
     "@types/node-fetch": "^2.5.7",
     "@typescript-eslint/eslint-plugin": "^3.3.0",
     "@typescript-eslint/parser": "^3.3.0",
-    "declarapi": "^0.4.0",
+    "declarapi": "^0.4.1",
     "jest": "^26.0.1",
     "node-fetch": "^2.6.0",
     "standardx": "^5.0.0",
