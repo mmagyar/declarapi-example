@@ -1,10 +1,21 @@
 {
   "$schema": "../../node_modules/declarapi/src/schema/crudContractSchema.json",
-  "name": "CatSpotter",
+  "name": "cat",
   "authentication": false,
   "dataType": {
     "id": "string",
-    "spotter": "string"
+    "spotter": "string",
+    "datetime": {
+      "$string": {
+        "regex": "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z"
+      }
+    },
+    "breed": "string",
+    "color": {
+      "$array": {
+        "$enum": ["black", "white", "grey", "blue", "brown", "cinnamon", "cream"]
+      }
+    }
   },
   "methods": {
     "get": true,
