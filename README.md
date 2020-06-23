@@ -1,6 +1,8 @@
-# Declarapi example
+# CatSpotter API server
 
 An example project using [declarapi](https://github.com/mmagyar/declarapi).
+
+Whenever you spot a cat, POST it here. Whenever you want to see cats, GET them from here.
 
 
 ## How to install?
@@ -9,7 +11,7 @@ An example project using [declarapi](https://github.com/mmagyar/declarapi).
 npm install
 ```
 
-Generate the API code:
+Generate the API code from the schema:
 
 ```
 npm run generate -- src/api-schema/api-schema.json ./src/generated-code && rm ./src/generated-code/api-schema-client.ts
