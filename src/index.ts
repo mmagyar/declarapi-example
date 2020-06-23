@@ -1,6 +1,7 @@
 import express from 'express'
-import { validate } from 'yaschva'
-import { contracts } from './generated-code/api-schema-server'
+import { registerRestMethods } from 'declarapi/src/runtime/registerRestMethods'
+import { addValidationToContract } from 'declarapi/src/runtime/contractValidation'
+import { contracts, catGetArgument, catGetReturns, ContractListType } from './generated-code/api-schema-server'
 import { exampleGetResponse } from './test-data/test-data'
 
 const app = express()
@@ -37,17 +38,38 @@ app.get('/health', (req, res) => {
   })
 })
 
-const serverError = (res: any, message: string) => {
-  res.status(500).send({
-    error: message
-  })
+const extendedContracts: ContractListType = {
+  catGet: {
+    name: contracts.catGet.name,
+    authentication: contracts.catGet.authentication,
+    type: contracts.catGet.type,
+    arguments: contracts.catGet.arguments,
+    returns: contracts.catGet.returns,
+    handle: async (input: catGetArgument): Promise<catGetReturns> => {
+      if (input.id) {
+        return exampleGetResponse.filter((spotting) => spotting.id === input.id)
+      }
+      if (input.search) {
+        const searchString = input.search.toLowerCase()
+        return exampleGetResponse.filter((spotting) => (
+          spotting.spotter.toLowerCase().includes(searchString) ||
+          spotting.breed.toLowerCase().includes(searchString)
+        ))
+      }
+      return exampleGetResponse
+    }
+  },
+  catPost: contracts.catPost,
+  catPut: contracts.catPut,
+  catPatch: contracts.catPatch,
+  catDelete: contracts.catDelete
 }
 
-app.get('/api/cat', (req, res) => {
-  const valid = validate(contracts.CatSpotterGet.arguments, req.query)
-  if (valid.result === 'fail') return serverError(res, 'Invalid arguments')
-  res.json(exampleGetResponse)
-})
+const contractsWithValidation = addValidationToContract(extendedContracts)
+
+const hmm = registerRestMethods(contractsWithValidation)
+
+app.get(hmm[0].route, hmm[0].handler)
 
 app.listen(port, () => {
   console.log(`Server started at http://localhost:${port}`)

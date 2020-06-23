@@ -31,12 +31,22 @@ describe('index.ts', () => {
     expect(data).toEqual(exampleGetResponse)
   })
 
+  it('gets the cat endpoint with ID argument', async () => {
+    const data = await fetch(`${testHost}/api/cat/cat2`).then(res => res.json())
+    expect(data).toEqual(exampleGetResponse[1])
+  })
+
+  it('gets the cat endpoint with search argument', async () => {
+    const data = await fetch(`${testHost}/api/cat?search=british`).then(res => res.json())
+    expect(data).toEqual([
+      exampleGetResponse[0]
+    ])
+  })
+
   it('gets the cat endpoint with invalid arguments', async () => {
     const res = await fetch(`${testHost}/api/cat?x=y`)
-    expect(res.status).toEqual(500)
+    expect(res.status).toEqual(400)
     const data = await res.json()
-    expect(data).toEqual({
-      error: 'Invalid arguments'
-    })
+    expect(data.errorType).toEqual('Input validation failed')
   })
 })
