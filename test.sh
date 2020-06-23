@@ -1,8 +1,10 @@
 #!/bin/bash
 set -eEuo pipefail
 
+# build server
+npm run build
+
 # start server
-# PORT=9876 npm run start &
 PORT=9876 node ./dist/index.js &
 PID=$!
 

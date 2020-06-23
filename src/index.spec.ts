@@ -36,6 +36,11 @@ describe('index.ts', () => {
     expect(data).toEqual(exampleGetResponse[1])
   })
 
+  it('gets the cat endpoint with ID argument and no cag', async () => {
+    const res = await fetch(`${testHost}/api/cat/non-existing`)
+    expect(res.size).toEqual(0)
+  })
+
   it('gets the cat endpoint with search argument', async () => {
     const data = await fetch(`${testHost}/api/cat?search=british`).then(res => res.json())
     expect(data).toEqual([
