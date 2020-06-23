@@ -1,7 +1,7 @@
 import express from 'express'
 import { registerRestMethods } from 'declarapi/src/runtime/registerRestMethods'
 import { addValidationToContract } from 'declarapi/src/runtime/contractValidation'
-import { contracts, catGetArgument, catGetReturns, ContractListType } from './generated-code/api-schema-server'
+import { contracts, catGetArgument, catGetReturns } from './generated-code/api-schema-server'
 import { exampleGetResponse } from './test-data/test-data'
 
 const app = express()
@@ -38,38 +38,28 @@ app.get('/health', (req, res) => {
   })
 })
 
-const extendedContracts: ContractListType = {
-  catGet: {
-    name: contracts.catGet.name,
-    authentication: contracts.catGet.authentication,
-    type: contracts.catGet.type,
-    arguments: contracts.catGet.arguments,
-    returns: contracts.catGet.returns,
-    handle: async (input: catGetArgument): Promise<catGetReturns> => {
-      if (input.id) {
-        return exampleGetResponse.filter((spotting) => spotting.id === input.id)
-      }
-      if (input.search) {
-        const searchString = input.search.toLowerCase()
-        return exampleGetResponse.filter((spotting) => (
-          spotting.spotter.toLowerCase().includes(searchString) ||
-          spotting.breed.toLowerCase().includes(searchString)
-        ))
-      }
-      return exampleGetResponse
-    }
-  },
-  catPost: contracts.catPost,
-  catPut: contracts.catPut,
-  catPatch: contracts.catPatch,
-  catDelete: contracts.catDelete
+const catGetHandler = (input: catGetArgument): Promise<catGetReturns> => {
+  if (input.id) {
+    return Promise.resolve(exampleGetResponse.filter((spotting) => spotting.id === input.id))
+  }
+  if (input.search) {
+    const searchString = input.search.toLowerCase()
+    return Promise.resolve(exampleGetResponse.filter((spotting) => (
+      spotting.spotter.toLowerCase().includes(searchString) ||
+      spotting.breed.toLowerCase().includes(searchString)
+    )))
+  }
+  return Promise.resolve(exampleGetResponse)
 }
 
+const extendedContracts = Object.assign({}, contracts, {
+  catGet: Object.assign({}, contracts.catGet, {
+    handle: catGetHandler
+  })
+})
 const contractsWithValidation = addValidationToContract(extendedContracts)
-
-const hmm = registerRestMethods(contractsWithValidation)
-
-app.get(hmm[0].route, hmm[0].handler)
+const restMethods = registerRestMethods(contractsWithValidation)
+app.get(restMethods[0].route, restMethods[0].handler)
 
 app.listen(port, () => {
   console.log(`Server started at http://localhost:${port}`)
