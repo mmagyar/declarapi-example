@@ -63,6 +63,10 @@
       }
     ]
   },
+  "preferredImplementation": {
+    "type": "elasticsearch",
+    "index": "cat"
+  },
   "methods": {
     "get": true,
     "post": true,
