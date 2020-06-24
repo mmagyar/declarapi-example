@@ -59,7 +59,7 @@
     "typescript": "^3.9.5"
   },
   "dependencies": {
-    "declarapi": "^0.4.1",
+    "declarapi": "^0.5.0",
     "express": "^4.17.1"
   }
 }
