@@ -1,11 +1,12 @@
 import express from 'express'
 import { registerRestMethods } from 'declarapi/dist/runtime/registerRestMethods'
 import { addValidationToContract } from 'declarapi/dist/runtime/contractValidation'
-import { contracts, catGetArgument, catGetReturns } from './generated-code/api-schema-server'
-import { exampleGetResponse } from './test-data/test-data'
+import { contracts } from './generated-code/api-schema-server'
 
 const app = express()
 const port = process.env.PORT || 8080
+
+app.use(express.json())
 
 app.get('/', (req, res) => {
   res.json({
@@ -38,30 +39,11 @@ app.get('/health', (req, res) => {
   })
 })
 
-const catGetHandler = (input: catGetArgument): Promise<catGetReturns> => {
-  if (input?.id) {
-    return Promise.resolve(exampleGetResponse.filter((spotting) => spotting.id === input.id))
-  }
-  if (input?.search) {
-    const searchString = input.search.toLowerCase()
-    return Promise.resolve(exampleGetResponse.filter((spotting) => (
-      spotting.spotter.toLowerCase().includes(searchString) ||
-      (spotting.breed && spotting.breed.toLowerCase().includes(searchString))
-    )))
-  }
-  return Promise.resolve(exampleGetResponse)
-}
-
-const extendedContracts = Object.assign({}, contracts, {
-  catGet: Object.assign({}, contracts.catGet, {
-    handle: catGetHandler
-  })
-})
-const contractsWithValidation = addValidationToContract(extendedContracts)
+const contractsWithValidation = addValidationToContract(contracts)
 const restMethods = registerRestMethods(contractsWithValidation)
-const getHandler = restMethods[0].handler
-app.get(restMethods[0].route, (req, res) => getHandler(req, res))
-// app.get(restMethods[0].route, getHandler)
+restMethods.forEach((expressable) => {
+  app[expressable.method](expressable.route, (req, res) => expressable.handler(req, res))
+})
 
 app.listen(port, () => {
   // tslint:disable-next-line:no-console
