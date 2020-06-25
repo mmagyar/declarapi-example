@@ -22,12 +22,7 @@ app.get('/', (req, res) => {
       },
       {
         url: '/api/cat',
-        description: 'List cat spottings'
-      },
-      {
-        url: '/api/cat',
-        method: 'POST',
-        description: 'Report new cat spotting'
+        description: 'CRUD endpoint for cat spotting'
       }
     ]
   })
