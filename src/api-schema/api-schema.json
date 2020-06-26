@@ -63,6 +63,7 @@
       }
     ]
   },
+  "search": "textSearch",
   "preferredImplementation": {
     "type": "elasticsearch",
     "index": "cat"

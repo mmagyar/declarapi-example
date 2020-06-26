@@ -1,16 +1,17 @@
 {
   "name": "declarapi-example",
-  "version": "1.0.0",
+  "version": "0.4.0",
   "description": "An example project using declarapi",
   "main": "dist/index.js",
   "scripts": {
-    "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
+    "prebuild": "npm run generate",
     "build": "tsc",
     "dev": "tsc-watch --onSuccess 'node ./dist/index.js'",
-    "prestart": "tslint -c tslint.json -p tsconfig.json --fix",
     "start": "tsc && node ./dist/index.js",
     "test": "jest",
-    "generate": "declarapi"
+    "generate": "declarapi src/api-schema/api-schema.json ./src/generated-code && rm ./src/generated-code/api-schema-client.ts",
+    "standard": "standardx src/**/*.ts",
+    "standard:fix": "standardx --fix src/**/*.ts"
   },
   "eslintConfig": {
     "rules": {
@@ -45,12 +46,12 @@
   "homepage": "https://github.com/mmagyar/declarapi-example#readme",
   "devDependencies": {
     "@types/express": "^4.17.6",
-    "@types/jest": "^26.0.0",
-    "@types/node": "^14.0.13",
+    "@types/jest": "^26.0.3",
+    "@types/node": "^14.0.14",
     "@types/node-fetch": "^2.5.7",
-    "@typescript-eslint/eslint-plugin": "^3.3.0",
-    "@typescript-eslint/parser": "^3.3.0",
-    "jest": "^26.0.1",
+    "@typescript-eslint/eslint-plugin": "^3.4.0",
+    "@typescript-eslint/parser": "^3.4.0",
+    "jest": "^26.1.0",
     "node-fetch": "^2.6.0",
     "standardx": "^5.0.0",
     "ts-jest": "^26.1.1",
@@ -59,7 +60,9 @@
     "typescript": "^3.9.5"
   },
   "dependencies": {
-    "declarapi": "^0.5.0",
-    "express": "^4.17.1"
+    "body-parser": "^1.19.0",
+    "declarapi": "^0.5.2",
+    "express": "^4.17.1",
+    "install": "^0.13.0"
   }
 }
