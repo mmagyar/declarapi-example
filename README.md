@@ -5,22 +5,11 @@ An example project using [declarapi](https://github.com/mmagyar/declarapi).
 Whenever you spot a cat, POST it here. Whenever you want to see cats, GET them from here.
 
 
-## How to install?
-
-```
-npm install
-```
-
-Generate the API code from the schema:
-
-```
-npm run generate -- src/api-schema/api-schema.json ./src/generated-code && rm ./src/generated-code/api-schema-client.ts
-```
-
-
 ## How to run?
 
 ```
+npm install
+npm build
 npm run start
 ```
 
