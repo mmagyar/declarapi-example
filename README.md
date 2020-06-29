@@ -5,11 +5,17 @@ An example project using [declarapi](https://github.com/mmagyar/declarapi).
 Whenever you spot a cat, POST it here. Whenever you want to see cats, GET them from here.
 
 
-## How to run?
+## How to install?
 
 ```
 npm install
-npm build
+```
+
+
+## How to run?
+
+```
+npm run build
 npm run start
 ```
 
