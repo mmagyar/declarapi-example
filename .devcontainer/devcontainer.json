@@ -1,0 +1,18 @@
+{
+  "extensions": [
+    "orta.vscode-jest",
+    "ryanluker.vscode-coverage-gutters",
+    "eg2.vscode-npm-script",
+    "chenxsan.vscode-standardjs",
+    "tabnine.tabnine-vscode",
+    "usernamehw.errorlens",
+    "streetsidesoftware.code-spell-checker",
+    "dbaeumer.vscode-eslint",
+    "ms-vscode.vscode-typescript-tslint-plugin",
+    "github.vscode-pull-request-github"
+  ],
+  "dockerFile": "Dockerfile",
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  }
+}
