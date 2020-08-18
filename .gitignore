@@ -1,2 +1,8 @@
 node_modules/
 dist/
+dist
+node_modules
+transpiled
+worker
+.cache
+.cargo-ok

@@ -1,0 +1,7 @@
+name = "declarapi_example"
+type = "webpack"
+account_id = "0de581be8fc7411dc7c3d016e152b47c"
+workers_dev = true
+zone_id = "5cc664b170ace4e8f64762a8fbf177e0"
+webpack_config = "webpack.config.cjs"
+route = "cats.network/*"

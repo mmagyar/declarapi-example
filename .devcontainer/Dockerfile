@@ -13,4 +13,4 @@ ENV APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=true
  && export DEBIAN_FRONTEND=noninteractive    && apt-get -y install --no-install-recommends htop vim
 
 RUN git config --global core.editor "vim"
-
+RUN npm install @cloudflare/wrangler -g --unsafe-perm=true --allow-root

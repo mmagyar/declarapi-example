@@ -3,12 +3,20 @@
   "version": "0.4.0",
   "description": "An example project using declarapi",
   "main": "dist/index.js",
+  "type": "module",
+  "sideEffects": false,
   "scripts": {
+    "build": "npm run webpack",
+    "webpack": "webpack --config webpack.config.cjs",
+    "dev": "NODE_ENV=development npm run build",
+    "test:clean": "rimraf ./transpiled/src ./transpiled/test",
+    "test": "npm run test:clean && npm run transpile && npm run test:run",
+    "test:run": "mocha --recursive transpiled/test",
+    "transpile": "tsc --project tsconfig-test.json",
     "prebuild": "npm run generate",
-    "build": "tsc",
-    "dev": "tsc-watch --onSuccess 'node ./dist/index.js'",
+    "build_old": "tsc",
+    "dev_old": "tsc-watch --onSuccess 'node ./dist/index.js'",
     "start": "node ./dist/index.js",
-    "test": "jest",
     "generate": "declarapi src/api-schema/api-schema.json ./src/generated-code && rm ./src/generated-code/api-schema-client.ts",
     "standard": "standardx src/**/*.ts",
     "standard:fix": "standardx --fix src/**/*.ts"
@@ -21,18 +29,13 @@
   },
   "standardx": {
     "env": [
-      "jest"
+      "jest",
+      "mocha"
     ],
     "parser": "@typescript-eslint/parser",
     "plugins": [
       "@typescript-eslint/eslint-plugin"
     ]
-  },
-  "jest": {
-    "roots": [
-      "<rootDir>/src"
-    ],
-    "preset": "ts-jest"
   },
   "repository": {
     "type": "git",
@@ -45,24 +48,30 @@
   },
   "homepage": "https://github.com/mmagyar/declarapi-example#readme",
   "devDependencies": {
-    "@types/express": "^4.17.6",
-    "@types/jest": "^26.0.3",
-    "@types/node": "^14.0.14",
-    "@types/node-fetch": "^2.5.7",
-    "@typescript-eslint/eslint-plugin": "^3.4.0",
-    "@typescript-eslint/parser": "^3.4.0",
-    "jest": "^26.1.0",
+    "@cloudflare/workers-types": "^2.0.0",
+    "@types/chai": "^4.2.12",
+    "@types/express": "^4.17.7",
+    "@types/mocha": "^8.0.3",
+    "@types/node": "^14.6.0",
+    "@typescript-eslint/eslint-plugin": "^3.9.1",
+    "@typescript-eslint/parser": "^3.9.1",
+    "babel-loader": "^8.1.0",
+    "chai": "^4.2.0",
+    "mocha": "^8.1.1",
     "node-fetch": "^2.6.0",
+    "service-worker-mock": "^2.0.5",
+    "source-map-loader": "^1.0.1",
     "standardx": "^5.0.0",
-    "ts-jest": "^26.1.1",
-    "tsc-watch": "^4.2.9",
-    "tslint": "^6.1.2",
-    "typescript": "^3.9.5"
+    "ts-loader": "^8.0.2",
+    "typescript": "^3.9.7",
+    "webpack": "4.44.1",
+    "webpack-cli": "^3.3.12"
   },
   "dependencies": {
+    "@types/service-worker-mock": "^2.0.1",
     "body-parser": "^1.19.0",
-    "declarapi": "^0.5.2",
-    "express": "^4.17.1",
-    "install": "^0.13.0"
+    "declarapi": "^0.9.8",
+    "declarapi-runtime": "^0.1.6",
+    "express": "^4.17.1"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "$schema": "../../node_modules/declarapi/src/schema/crudContractSchema.json",
+  "$schema": "../../node_modules/declarapi/schema/crudContractSchema.json",
   "name": "cat",
   "authentication": false,
   "dataType": {
@@ -65,8 +65,9 @@
   },
   "search": "textSearch",
   "preferredImplementation": {
-    "type": "elasticsearch",
-    "index": "cat"
+    "type": "key-value",
+    "index": "cat",
+    "backend": "worker"
   },
   "methods": {
     "get": true,

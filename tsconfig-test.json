@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
-    "module": "es6",
+    "module": "commonjs",
     "target": "esnext",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "preserveConstEnums": true,
-    "outDir": "./dist",
+    "outDir": "./transpiled",
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "strict": true,
@@ -19,11 +19,12 @@
     "experimentalDecorators": true,
     "lib": [
       "esnext",
-      "webworker"
+      "webworker",
     ],
-    "types": ["@cloudflare/workers-types"]
+    "types": ["@cloudflare/workers-types", "mocha", "chai" ]
   },
   "include": [
+    "./test/**/*.ts",
     "./src/*.ts",
     "./src/**/*.ts"  ],
   "exclude": [
