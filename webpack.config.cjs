@@ -1,7 +1,11 @@
 const path = require('path')
-// import path from 'path'
 const webpack = require('webpack')
 const mode = process.env.NODE_ENV || 'production'
+
+const spawnSync = require('child_process').spawnSync
+const code = spawnSync('npm', ['run', 'generate'], { encoding: 'utf-8' })
+console.log(code.stdout)
+if (code.status) throw new Error('CODE GENERATION FAILED:' + code.status + ' : ' + code.stderr)
 
 module.exports = {
   output: {

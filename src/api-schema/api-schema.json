@@ -67,7 +67,7 @@
   "preferredImplementation": {
     "type": "key-value",
     "index": "cat",
-    "backend": "worker"
+    "backend": "custom"
   },
   "methods": {
     "get": true,

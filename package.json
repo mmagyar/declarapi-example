@@ -13,7 +13,6 @@
     "test": "npm run test:clean && npm run transpile && npm run test:run",
     "test:run": "mocha --recursive transpiled/test",
     "transpile": "tsc --project tsconfig-test.json",
-    "prebuild": "npm run generate",
     "build_old": "tsc",
     "dev_old": "tsc-watch --onSuccess 'node ./dist/index.js'",
     "start": "node ./dist/index.js",
@@ -60,18 +59,18 @@
     "mocha": "^8.1.1",
     "node-fetch": "^2.6.0",
     "service-worker-mock": "^2.0.5",
-    "source-map-loader": "^1.0.1",
+    "source-map-loader": "^1.0.2",
     "standardx": "^5.0.0",
     "ts-loader": "^8.0.2",
-    "typescript": "^3.9.7",
+    "typescript": "^4.0.2",
     "webpack": "4.44.1",
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
     "@types/service-worker-mock": "^2.0.1",
     "body-parser": "^1.19.0",
-    "declarapi": "^0.9.8",
-    "declarapi-runtime": "^0.1.6",
+    "declarapi": "^0.9.10",
+    "declarapi-runtime": "^0.3.8",
     "express": "^4.17.1"
   }
 }
