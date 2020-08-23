@@ -6,5 +6,5 @@ declare var WORKER_KV:KV
 
 addEventListener('fetch', (event) => {
   (global as any).customKv = { custom: () => WORKER_KV }
-  event.respondWith(handleRequest(event.request))
+  event.respondWith(handleRequest(event))
 })

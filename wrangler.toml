@@ -3,7 +3,10 @@ type = "webpack"
 account_id = "0de581be8fc7411dc7c3d016e152b47c"
 zone_id = "5cc664b170ace4e8f64762a8fbf177e0"
 webpack_config = "webpack.config.cjs"
-route = "cats.network/*"
+route = "cats.network/api/*"
+[site]
+bucket = "./public"
+entry-point ="./"
 [[kv_namespaces]]
 binding = "WORKER_KV"
 id = "aa0c69c97d3a496dbcc8815f15f7e22a"

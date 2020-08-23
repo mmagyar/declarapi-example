@@ -18,6 +18,7 @@ module.exports = {
     plugins: []
   },
   optimization: {
+    minimize: false
     // usedExports: true
     // sideEffects: true
   },

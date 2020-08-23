@@ -1,8 +1,11 @@
 import { contracts } from './generated-code/api-schema-server'
 import { processContract } from 'declarapi-runtime'
+import { getAssetFromKV } from '@cloudflare/kv-asset-handler'
 
 /* eslint-env serviceworker */
-export async function handleRequest (request: Request): Promise<Response> {
+export async function handleRequest (fetchEvent: FetchEvent): Promise<Response> {
+  const { request } = fetchEvent
+
   let body = {}
   let url
   try {
@@ -47,7 +50,16 @@ export async function handleRequest (request: Request): Promise<Response> {
       })
     }
   }
-  return new Response('{"error":"method not found"}', {
+  const additionalErrors = []
+  if (request.method === 'GET') {
+    try {
+      return await getAssetFromKV(fetchEvent)
+    } catch (e) {
+      additionalErrors.push(e.name)
+      additionalErrors.push(e.message)
+    }
+  }
+  return new Response(JSON.stringify({ status: 404, errors: ['not found', url, ...additionalErrors], data: request.url }, null, 2), {
     status: 404, headers: { 'Content-Type': 'application/json' }
   })
 }

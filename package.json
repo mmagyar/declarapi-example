@@ -29,7 +29,8 @@
   "standardx": {
     "env": [
       "jest",
-      "mocha"
+      "mocha",
+      "service-worker"
     ],
     "parser": "@typescript-eslint/parser",
     "plugins": [
@@ -67,6 +68,7 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
+    "@cloudflare/kv-asset-handler": "0.0.11",
     "@types/service-worker-mock": "^2.0.1",
     "body-parser": "^1.19.0",
     "declarapi": "^0.9.10",
