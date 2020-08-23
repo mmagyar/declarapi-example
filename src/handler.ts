@@ -10,18 +10,16 @@ export async function handleRequest (request: Request): Promise<Response> {
     if (request.method === 'GET') {
       const jsonParam = url.searchParams.get('json')
       const keys = Array.from(url.searchParams.keys())
-      console.log(typeof jsonParam, 'JSON PARAM', jsonParam)
       if (jsonParam == null && keys.length > 0) {
         throw new Error("Query parameters where given, but parameter named 'json' is missing," +
         " can't parse input. All inputs should be under the parameter named 'json' in a json string")
       }
       if (jsonParam) { body = JSON.parse(jsonParam) }
-    } else if (request.bodyUsed && request.headers.get('Content-Type') === 'application/json') {
+    } else if (request.bodyUsed) {
       body = await request.json()
     }
   } catch (e) {
     const errorData = request.method === 'GET' ? url && url.searchParams.get('json') : request.text()
-    console.log('ERE', e, e.name, e.message, errorData)
     return new Response(JSON.stringify({
       status: 500,
       data: errorData,
@@ -31,9 +29,10 @@ export async function handleRequest (request: Request): Promise<Response> {
   for (const key of Object.keys(contracts)) {
     const wrapped = processContract((contracts as any)[key])
     const sameRoute = url.pathname.startsWith(wrapped.route)
-    console.log(sameRoute, url.pathname, wrapped.route, body)
     if (sameRoute && request.method === wrapped.method) {
-      const result = await wrapped.handle(body)
+      const id = url.pathname.split(wrapped.route + '/')[1] || undefined
+
+      const result = await wrapped.handle(body, id)
 
       return new Response(JSON.stringify(result.response), {
         status: result.status,
