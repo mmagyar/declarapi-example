@@ -9,13 +9,18 @@ export async function handleRequest (request: Request): Promise<Response> {
     url = new URL(request.url)
     if (request.method === 'GET') {
       const jsonParam = url.searchParams.get('json')
+      const search = url.searchParams.get('search')
       const keys = Array.from(url.searchParams.keys())
-      if (jsonParam == null && keys.length > 0) {
+      if ((jsonParam == null && search == null) && keys.length > 0) {
         throw new Error("Query parameters where given, but parameter named 'json' is missing," +
         " can't parse input. All inputs should be under the parameter named 'json' in a json string")
       }
-      if (jsonParam) { body = JSON.parse(jsonParam) }
-    } else if (request.bodyUsed) {
+      if (jsonParam) {
+        body = JSON.parse(jsonParam)
+      } else if (search) {
+        body = { search }
+      }
+    } else if (request.body) {
       body = await request.json()
     }
   } catch (e) {
