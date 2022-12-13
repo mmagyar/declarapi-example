@@ -73,6 +73,6 @@
     "body-parser": "^1.19.0",
     "declarapi": "^0.9.10",
     "declarapi-runtime": "^0.3.8",
-    "express": "^4.17.1"
+    "express": "^4.17.3"
   }
 }
